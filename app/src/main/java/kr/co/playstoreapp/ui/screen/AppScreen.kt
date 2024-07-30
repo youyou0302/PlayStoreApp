@@ -2,21 +2,13 @@ package kr.co.playstoreapp.ui.screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.ScrollableTabRow
-import androidx.compose.material.TabRowDefaults
-import androidx.compose.material.Text
-import androidx.compose.material3.Tab
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
-import com.google.accompanist.pager.pagerTabIndicatorOffset
 import com.google.accompanist.pager.rememberPagerState
-import kotlinx.coroutines.launch
+import kr.co.playstoreapp.ui.component.ScreenTabRow
 import kr.co.playstoreapp.ui.data.AppScreenItem
 import kr.co.playstoreapp.ui.screen.app.CategoryScreen
 import kr.co.playstoreapp.ui.screen.app.KidsScreen
@@ -37,7 +29,7 @@ fun AppScreen() {
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
-        AppTabRow(
+        ScreenTabRow(
             pages = pages,
             pagerState = pagerState
         )
@@ -45,44 +37,6 @@ fun AppScreen() {
             pages = pages,
             pagerState = pagerState
         )
-    }
-}
-
-@OptIn(ExperimentalPagerApi::class)
-@Composable
-fun AppTabRow(
-    pages: List<String>,
-    pagerState: PagerState
-) {
-    val coroutineScope = rememberCoroutineScope()
-
-    ScrollableTabRow(
-        backgroundColor = Color.White,
-        selectedTabIndex = pagerState.currentPage,
-        indicator = { tabPositions ->
-            TabRowDefaults.Indicator(
-                modifier = Modifier.pagerTabIndicatorOffset(
-                    pagerState,
-                    tabPositions = tabPositions
-                ),
-                color = Color(0xFF7C86DF)
-            )
-        },
-        edgePadding = 0.dp
-    ) {
-        pages.forEachIndexed { index, text ->
-            Tab(
-                selected = pagerState.currentPage == index,
-                onClick = {
-                    coroutineScope.launch {
-                        pagerState.animateScrollToPage(index)
-                    }
-                },
-                text = { Text(text = text) },
-                selectedContentColor = Color(0xFF7C86DF),
-                unselectedContentColor = Color.LightGray
-            )
-        }
     }
 }
 
