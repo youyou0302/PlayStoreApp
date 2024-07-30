@@ -1,23 +1,17 @@
 package kr.co.playstoreapp.ui.navigation
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -124,31 +118,27 @@ fun ScaffoldBottom(navController: NavHostController) {
         MainRoute.BOOK
     )
 
-    AnimatedVisibility(
-        visible = items.map { it.route }.contains(currentRoute)
-    ) {
-        NavigationBar {
-            items.forEach { item ->
-                NavigationBarItem(
-                    selected = currentRoute == item.route,
-                    icon = {
-                        Icon(
-                            imageVector = item.icon,
-                            contentDescription = item.contentDescription
-                        )
-                    },
-                    label = { Text(text = item.text) },
-                    onClick = {
-                        navController.navigate(item.route) {
-                            navController.graph.startDestinationRoute?.let {
-                                popUpTo(it) { saveState = true }
-                            }
-                            launchSingleTop = true
-                            restoreState = true
+    NavigationBar {
+        items.forEach { item ->
+            NavigationBarItem(
+                selected = currentRoute == item.route,
+                icon = {
+                    Icon(
+                        imageVector = item.icon,
+                        contentDescription = item.contentDescription
+                    )
+                },
+                label = { Text(text = item.text) },
+                onClick = {
+                    navController.navigate(item.route) {
+                        navController.graph.startDestinationRoute?.let {
+                            popUpTo(it) { saveState = true }
                         }
+                        launchSingleTop = true
+                        restoreState = true
                     }
-                )
-            }
+                }
+            )
         }
     }
 }
