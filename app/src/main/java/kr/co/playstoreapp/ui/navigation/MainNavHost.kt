@@ -22,10 +22,13 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -36,16 +39,18 @@ import kr.co.playstoreapp.ui.screen.AppScreen
 import kr.co.playstoreapp.ui.screen.BookScreen
 import kr.co.playstoreapp.ui.screen.GameScreen
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainNavHost() {
     val navController = rememberNavController()
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()  // 맨 위 혹은 위로 스크롤 할 때 나타남
     Surface {
         Scaffold(
             topBar = {
-                ScaffoldTop()
+                ScaffoldTop(scrollBehavior)
             },
             content = { padding ->
-                ScaffoldContent(padding, navController)
+                ScaffoldContent(padding, navController, scrollBehavior)
             },
             bottomBar = {
                 ScaffoldBottom(navController)
@@ -56,7 +61,7 @@ fun MainNavHost() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ScaffoldTop() {
+fun ScaffoldTop(scrollBehavior: TopAppBarScrollBehavior) {
     TopAppBar(
         title = {
             TextField(
@@ -85,14 +90,17 @@ fun ScaffoldTop() {
             IconButton(onClick = { /*TODO*/ }) {
                 Icon(imageVector = Icons.Filled.Settings, contentDescription = "Setting")
             }
-        }
+        },
+        scrollBehavior = scrollBehavior
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ScaffoldContent(padding: PaddingValues, navController: NavHostController) {
+fun ScaffoldContent(padding: PaddingValues, navController: NavHostController, scrollBehavior: TopAppBarScrollBehavior) {
     NavHost(
-        modifier = Modifier.padding(padding),
+        modifier = Modifier.padding(padding)
+            .nestedScroll(scrollBehavior.nestedScrollConnection),
         navController = navController,
         startDestination = MainRoute.GAME.route
     ) {
