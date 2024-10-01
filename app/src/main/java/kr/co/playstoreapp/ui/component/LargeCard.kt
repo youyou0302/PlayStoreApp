@@ -47,7 +47,7 @@ fun LargeCard() {
             horizontalAlignment = Alignment.Start
         ) {
             Image(
-                painter = painterResource(id = R.drawable.image_example2),
+                painter = painterResource(id = R.drawable.lineage_main),
                 contentDescription = "description",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
@@ -57,7 +57,7 @@ fun LargeCard() {
             Spacer(modifier = Modifier.height(5.dp))
             Row {
                 Image(
-                    painter = painterResource(id = R.drawable.image_example),
+                    painter = painterResource(id = R.drawable.lineage_sub),
                     contentDescription = "description",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.weight(1.0f)
