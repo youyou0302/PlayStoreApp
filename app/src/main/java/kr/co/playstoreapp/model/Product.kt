@@ -7,5 +7,6 @@ data class Product(
     val subImage: Int,
     val company: String,
     val age: String,
+    val type: String,
     val rating: String
 )
